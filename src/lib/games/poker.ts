@@ -421,7 +421,8 @@ const evaluateFiveCards = (cards: Card[]): HandEvaluation => {
   
   const isFlush = suits.every(s => s === suits[0]);
   const isStraight = checkStraight(values);
-  const isRoyal = isStraight && values[0] === 13 && values[4] === 1;
+  // Royal flush is A-K-Q-J-10 (values sorted: [13, 12, 11, 10, 1] with A=1)
+  const isRoyal = isStraight && values[0] === 13 && values[4] === 1 && values[1] === 12;
   
   const valueCounts = getValueCounts(values);
   const counts = Object.values(valueCounts).sort((a, b) => b - a);
@@ -470,8 +471,15 @@ const evaluateFiveCards = (cards: Card[]): HandEvaluation => {
 };
 
 const checkStraight = (values: number[]): boolean => {
+  // Check for Ace-high straight (10-J-Q-K-A where A=1, K=13)
+  // When sorted descending by value: [13, 12, 11, 10, 1]
+  if (values[0] === 13 && values[1] === 12 && values[2] === 11 && values[3] === 10 && values[4] === 1) {
+    return true;
+  }
+  
   // Check for Ace-low straight (A-2-3-4-5)
-  if (values[0] === 13 && values[1] === 4 && values[2] === 3 && values[3] === 2 && values[4] === 1) {
+  // When sorted descending by value: [5, 4, 3, 2, 1]
+  if (values[0] === 5 && values[1] === 4 && values[2] === 3 && values[3] === 2 && values[4] === 1) {
     return true;
   }
   
