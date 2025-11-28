@@ -38,6 +38,26 @@ export const BlackjackGame: React.FC<BlackjackGameProps> = ({ onBack }) => {
       const dealtState = dealInitialCards(newState);
       setGameState(dealtState);
       setMessage('');
+      
+      // If player has blackjack, automatically proceed to dealer's turn
+      if (dealtState.players[0].hasBlackjack) {
+        setMessage('Blackjack!');
+        setTimeout(() => {
+          const dealerState = dealerPlay(dealtState);
+          setGameState(dealerState);
+          
+          setTimeout(() => {
+            const finalState = settleRound(dealerState);
+            setGameState(finalState);
+            
+            if (dealtState.players[0].hasBlackjack && !dealerState.dealer.hasBlackjack) {
+              setMessage('Blackjack! You win 3:2!');
+            } else if (dealerState.dealer.hasBlackjack) {
+              setMessage('Push - both have Blackjack!');
+            }
+          }, 500);
+        }, 1000);
+      }
     }
   }, [gameState, player?.id, betAmount]);
 
