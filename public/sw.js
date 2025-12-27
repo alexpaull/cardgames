@@ -1,9 +1,10 @@
 const CACHE_NAME = 'card-games-v1';
+const BASE_PATH = '/cardgames';
 const urlsToCache = [
-  '/',
-  '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  BASE_PATH + '/',
+  BASE_PATH + '/manifest.json',
+  BASE_PATH + '/icons/icon-192x192.png',
+  BASE_PATH + '/icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {

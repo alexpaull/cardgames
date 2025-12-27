@@ -5,7 +5,7 @@ import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistratio
 export const metadata: Metadata = {
   title: "Card Games - Play Online",
   description: "Play classic card games online - Solitaire, Blackjack, Poker, Hearts, and President. Play against the computer or with friends!",
-  manifest: "/manifest.json",
+  manifest: "/cardgames/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -43,8 +43,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icons/icon-192x192.png" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="icon" href="/cardgames/icons/icon-192x192.png" />
+        <link rel="apple-touch-icon" href="/cardgames/icons/icon-192x192.png" />
       </head>
       <body className="font-sans antialiased">
         <ServiceWorkerRegistration />
