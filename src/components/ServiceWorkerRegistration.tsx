@@ -4,7 +4,12 @@ import { useEffect } from 'react';
 
 export function ServiceWorkerRegistration() {
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    // Only register service worker in production
+    if (
+      process.env.NODE_ENV === 'production' &&
+      typeof window !== 'undefined' && 
+      'serviceWorker' in navigator
+    ) {
       window.addEventListener('load', () => {
         // basePath is handled by Next.js for all assets
         const basePath = '/cardgames';
@@ -16,6 +21,13 @@ export function ServiceWorkerRegistration() {
             console.log('ServiceWorker registration failed: ', err);
           }
         );
+      });
+    } else if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      // Unregister service workers in development
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.unregister();
+        }
       });
     }
   }, []);
